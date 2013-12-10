@@ -3,7 +3,7 @@
 //
 //
 //  Created by Alyssa Harris on 12/10/13.
-//
+//	edited by Matt McCaleb on 12/10/13.
 //
 
 #include <iostream>
@@ -24,6 +24,7 @@ int main{
         cout<<"no ticket!"<<endl;
     }
     else{
+		
         //speeding ticket is calculated as follows:
         //$100 fine for the first 10 mph over the speeding limit
         //For every mile above that, $10 is added
