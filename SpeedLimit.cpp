@@ -20,7 +20,7 @@ int main{
     cin>>speedLimit;
     cout<<"How fast were you going?"<<endl;
     cin>>goingSpeed;
-    if (goingSpeed < speedLimit){
+    if (goingSpeed <= speedLimit){
         cout<<"no ticket!"<<endl;
     }
     else{
@@ -28,6 +28,10 @@ int main{
         //speeding ticket is calculated as follows:
         //$100 fine for the first 10 mph over the speeding limit
         //For every mile above that, $10 is added
+		speedingTicket = 100;
+		if (goingSpeed - speedLimit > 10)
+			speedingTicket += (goingSpeed - speedLimit) * 10
+		cout << "your ticket it is $" << speedingTicket << ".00, slow down!" << endl;
     }
     return 0;
 }
