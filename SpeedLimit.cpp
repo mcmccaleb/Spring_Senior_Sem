@@ -12,7 +12,8 @@
 
 using namespace std;
 
-int main{
+int main()
+{
     int speedLimit;
     int goingSpeed;
     int speedingTicket;
@@ -21,7 +22,7 @@ int main{
     cin>>speedLimit;
     cout<<"How fast were you going?"<<endl;
     cin>>goingSpeed;
-	reckless=speedLimit+40;
+	reckless= speedLimit +40;
     if (goingSpeed <= speedLimit){
         cout<<"no ticket!"<<endl;
     }
