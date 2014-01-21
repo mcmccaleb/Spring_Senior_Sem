@@ -1,0 +1,59 @@
+cmake_minimum_required(VERSION 2.8.9)
+# Accept new policy related to automatically linking Qt apps to qtmain.lib on Windows
+cmake_policy(SET CMP0020 NEW)
+
+find_package(Qt5Quick 5.1 REQUIRED)
+find_package(Qt5Widgets 5.1 REQUIRED)
+if(MARSYAS_OPENGL)
+  find_package(Qt5OpenGL 5.1 REQUIRED)
+endif()
+
+get_target_property(qt5_core_filename Qt5::Core LOCATION)
+get_filename_component(qt5_core_dir ${qt5_core_filename} PATH)
+if(APPLE)
+  get_filename_component(qt5_dir ${qt5_core_dir}/../.. ABSOLUTE)
+else()
+  get_filename_component(qt5_dir ${qt5_core_dir}/.. ABSOLUTE)
+endif()
+
+add_subdirectory(common)
+
+macro(marsyas_qt5_app APP)
+  if(WIN32 AND NOT MSVC)
+    add_executable(${APP} WIN32 ${ARGN})
+  else()
+    add_executable(${APP} ${ARGN})
+  endif()
+
+  target_link_libraries(${APP} marsyas marsyasqt5)
+
+  if(MSVC)
+    set_property( TARGET ${APP} APPEND PROPERTY LINK_FLAGS "/SUBSYSTEM:windows /ENTRY:mainCRTStartup" )
+  endif()
+
+  install(TARGETS ${APP} DESTINATION bin)
+endmacro()
+
+if(WITH_CPP11)
+  add_subdirectory(inspector)
+endif()
+
+if(MARSYAS_AUDIOIO AND MARSYAS_REALTIME)
+  add_subdirectory(MarPlayer)
+  if(MARSYAS_MIDIIO)
+    add_subdirectory(MarGrid2)
+  endif()
+  add_subdirectory(MarPhasevocoder)
+  add_subdirectory(MarLpc)
+  if(MARSYAS_OPENGL)
+    add_subdirectory(MarPanning)
+    add_subdirectory(MarSndPeek)
+    add_subdirectory(MarCorrelogram)
+  endif()
+endif()
+
+if(WIN32)
+  install(FILES ${qt5_dir}/plugins/platforms/qwindows.dll DESTINATION bin/platforms)
+  install(DIRECTORY ${qt5_dir}/qml/QtQuick.2 DESTINATION bin)
+  install(DIRECTORY ${qt5_dir}/qml/QtQuick/Layouts DESTINATION bin/QtQuick)
+endif()
