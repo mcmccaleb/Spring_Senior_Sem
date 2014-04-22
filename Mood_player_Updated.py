@@ -25,6 +25,15 @@ def select(evt):
 	value=play_list_display.get(play_list_display.curselection())
 	current_song.insert(0, value)
 	print value
+#time selecter
+def time_select(evt):
+	time=time_box.get(time_box.curselection())
+	print time
+#mood selector
+def mood_select(evt):
+	Mood=mood_name.get(mood_name.curselection())
+	current_mood.insert(0,Mood)
+	print Mood
 #play button for the song	
 def play():
 	
@@ -46,15 +55,17 @@ def next():
 	
 def Mood():#when pushed sends to the playlist_files listbox
 	mood_entry=mood_str.get()
-	playlist_files.insert(END,mood_entry)
+	mood_name.insert(END,mood_entry)
 	#print mood_entry
-def Time():
-	time_entry=time_str.get()
+def like():
+	print "like"
+def dislike():
+	print "dislike"
 #def pause():
 	#p=commands.getoutput("p")
 #	print "p"
 #def stop():
-#	output,stderror=communicate("\r")
+#	Return 
 #def main():
 root=tk.Tk()
 root.title('Player')
@@ -70,36 +81,54 @@ play_button.place(x=0, y=0)
 next_button = Button(root, width = 5, height = 1, text='Next',
                            fg='Orange', command = next,  bg="black")
 next_button.place(x=70, y=0)
+#thumbs up
+like_button=Button(root, width = 5, height = 1, text='Like',
+                           fg='Orange', command = like,  bg="black")
+like_button.place(x=0, y=100)
+#thumbs down
+dislike_button=Button(root, width = 5, height = 1, text='Dislike',
+                           fg='Orange', command = dislike,  bg="black")
+dislike_button.place(x=70, y=100)
 #pause button
 #pause_button=Button(root, width = 5, height = 1, text='Pause',
          #                  fg='Orange', command = pause,  #bg="black")
 #pause_button.place(x=140, y=0)
 #stop button
 #stop_button=Button(root, width = 5, height = 1, text='Stop',
-          #                 fg='Orange', command = stop,  #bg="black")
+ #                          fg='Orange', command = stop,  bg="black")
 #stop_button.place(x=210, y=0)
 #entry box for mood and button
 mood=Entry(root, textvariable=mood_str)
-mood.place(x=0, y=60)
+mood.place(x=0, y=30)
 mood_button = Button(root, width = 5, height = 1, text='Mood',
                            fg='Orange', command = Mood, bg="black")
-mood_button.place(x=170, y=55)
-#entry box for time and button
-time=Entry(root, textvariable=time_str)
-time.place(x=0,y=100)
-time_button = Button(root, width = 5, height = 1, text='Time',
-                           fg='Orange', command = Time, bg="black")
-time_button.place(x=170,y=95)
+mood_button.place(x=170, y=30)
+mood_label=Label(text="Current Mood")
+mood_label.place(x=0, y=60)
+current_mood=Listbox(root,width=18, height=1)
+current_mood.place(x=0, y=80)
 #current song box
 current_label=Label(text="Current Song")
 current_label.place(x=305, y=5)
 current_song=Listbox(root, width=18, height=1)
 current_song.place(x=305, y=25)
-#where you can select a playlist that was created
-playlist_selector=Label(text="Playlist Selecter")
-playlist_selector.place(x=305, y=60)
-playlist_files=Listbox(root, width=18,height=3)
-playlist_files.place(x=305, y=80)
+#Time selector
+time_selector=Label(text="Time Selector")
+time_selector.place(x=200, y=75)
+time_box=Listbox(root, width=10, height=3)
+time_box.place(x=200, y=95)
+#times names
+time_box.insert(0,"Morning")
+time_box.insert(1,"Afternoon")
+time_box.insert(2,"Evening")
+time_box.bind('<<ListboxSelect>>',time_select)
+#where you can select and enter moods
+mood_selector=Label(text="Mood Selecter")
+mood_selector.place(x=305, y=60)
+#mood selection box
+mood_name=Listbox(root, width=18,height=3)
+mood_name.place(x=305, y=80)
+mood_name.bind('<<ListboxSelect>>',mood_select)
 #all music window
 play_list_window=Toplevel(root, height=350, width=300)
 play_list_window.title('Playlist')
