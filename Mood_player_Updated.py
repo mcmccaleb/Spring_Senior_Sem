@@ -7,7 +7,7 @@ import os, sys
 from threading import Thread
 import subprocess
 
-path="Music"
+path="music"
 dirs=os.listdir(path)
 value="0"
 song="0"
@@ -15,9 +15,9 @@ count = len(dirs)
 num=-1
 me=0
 def music(value, args):
-	os.system('mplayer "Music/'+value+'"')
+	os.system('mplayer "music/'+value+'"')
 def music2(son, args):
-	os.system('mplayer "Music/'+son+'"')
+	os.system('mplayer "music/'+son+'"')
 
 #click songs in list to play sets song to value for play button
 def select(evt):
